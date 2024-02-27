@@ -136,6 +136,7 @@ async function addRemovefvrtAStory(e) {
     currentUser = await User.removeFavorite(currentUser.username, liStory.id, currentUser.loginToken);
 
   }
+  
   if(icon.classList.contains("fa-trash-alt")){
     liStory.remove();
     storyList.stories = storyList.stories.filter(function(stry){
@@ -146,8 +147,9 @@ async function addRemovefvrtAStory(e) {
     });
     currentUser.favorites = currentUser.favorites.filter(function(stry){
       return stry.storyId!==liStory.id;
-    })
-     const deletedStory = await StoryList.deleteAStory(currentUser, liStory.id);
+    });
+
+     await StoryList.deleteAStory(currentUser, liStory.id);
   }
 
 

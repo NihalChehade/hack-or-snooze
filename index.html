@@ -32,11 +32,12 @@
     <!-- top navigation bar -->
     <nav>
       <div class="navbar-brand">
-        <a class="nav-link" href="#" id="nav-all">Hack or Snooze</a>|
-        <a class="nav-link" href="#" id="nav-submit"></a>|
-        <a class="nav-link" href="#" id="nav-favorites"></a>|
-        <a class="nav-link" href="#" id="nav-myStories"></a>
+        <a class="nav-link" href="#" id="nav-all">Hack or Snooze</a>
       </div>
+      <div id="userNavs" class="subFavOwn hidden">|
+        <a class="nav-link" href="#" id="nav-submit">Submit</a>|
+        <a class="nav-link" href="#" id="nav-favorites">Favorites</a>|
+        <a class="nav-link" href="#" id="nav-myStories">Own Stories</a></div>
       <div class="nav-right">
         <a class="nav-link" href="#" id="nav-login">login/signup</a>
         <a class="nav-link" href="#" id="nav-user-profile"></a>
@@ -65,9 +66,9 @@
           <input id="submit-url" />
         </div>
         <button type="submit">Save</button>
-        <hr />
       </form>
     </section>
+
     <!-- area for stories (all stories, user stories, favorites) -->
     <section class="stories-container container">
       <!-- loading message (removed by JS after stories loaded) -->
@@ -75,16 +76,19 @@
       <!-- List of all stories -->
       <ol id="all-stories-list" class="stories-list"></ol>
     </section>
+
     <!-- area for stories ( favorites) -->
     <section class="favorite-stories-container container">
       <!-- List of all favorite stories -->
       <ol id="favorite-stories-list" class="stories-list"></ol>
     </section>
+
     <!-- area for stories ( ownstories) -->
     <section class="my-stories-container container">
       <!-- List of all my stories -->
       <ol id="my-stories-list" class="stories-list"></ol>
     </section>
+
     <!-- Login and signup forms -->
     <section class="account-forms-container container">
       <!-- Login form -->
@@ -108,7 +112,7 @@
           />
         </div>
         <button type="submit">login</button>
-        <hr />
+        <hr/>
       </form>
       <!-- Signup form -->
       <form

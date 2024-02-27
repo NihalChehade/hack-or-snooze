@@ -1,6 +1,7 @@
 /* General typography */
 
 body {
+  background: linear-gradient(0.25turn,#A2B9E4,#B6A3C3,#A2B9E4);
   font-family: Arimo, sans-serif;
   margin: 8px 7.5vw;
 }
@@ -112,6 +113,7 @@ form > hr {
 @media screen and (max-width: 576px) {
   body {
     margin: 0;
+   
   }
 }
 

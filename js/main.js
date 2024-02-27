@@ -20,6 +20,7 @@ const $navLogOut = $("#nav-logout");
 const $navSubmit = $('#nav-submit');
 const $navFavorites = $('#nav-favorites');
 const $navMyStories = $('#nav-myStories');
+const $userNavs = $('#userNavs');
 
 
 /** To make it easier for individual components to show just themselves, this

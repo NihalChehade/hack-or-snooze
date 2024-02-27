@@ -34,9 +34,7 @@ function updateNavOnLogin() {
   $navLogOut.show();
   $navSubmit.show();
   $navUserProfile.text(`${currentUser.username}`).show();
-  $navSubmit.text('Submit').show();
-  $navFavorites.text('Favorites').show();
-  $navMyStories.text('My Stories').show();
+  $userNavs.show();
 }
 
 /** Show submitform on click on "submit" */

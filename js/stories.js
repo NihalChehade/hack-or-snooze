@@ -7,7 +7,7 @@ let storyList;
 
 async function getAndShowStoriesOnStart() {
   storyList = await StoryList.getStories();
-  console.log("storyList is",storyList);
+  console.log("storyList is", storyList);
   $storiesLoadingMsg.remove();
   putStoriesOnPage();
 }
@@ -29,12 +29,13 @@ function generateStoryMarkup(story) {
    <span id="starSpan" class="star hidden">
       <i class="fa-regular fa-star"></i>
    </span>
-   <a href="${story.url}" target="a_blank" class="story-link">
+   <span class="mainSpan"><a href="${story.url}" target="a_blank" class="story-link">
      ${story.title}
    </a>
    <small class="story-hostname">(${hostName})</small>
-   <small class="story-author">by ${story.author}</small>
-   <small class="story-user">posted by ${story.username}</small>
+   <div class="story-author">by ${story.author}</div>
+   <div class="story-user">posted by ${story.username}</div></span>
+   <hr>
  </li>
 `);
 
@@ -53,11 +54,10 @@ function putStoriesOnPage() {
   for (let story of storyList.stories) {
     const $story = generateStoryMarkup(story);
 
-    changeStarOnFav($story,story);
+    changeStarOnFav($story, story);
     $allStoriesList.append($story);
   }
-  const $favoriteSpan = $('.star');                                                    
-  $favoriteSpan.removeClass('hidden');
+
 
   // generateFavoriteStarOnLogin();
   $allStoriesList.show();
@@ -78,32 +78,24 @@ async function saveAndDisplayStory(evt) {
   currentUser.ownStories.unshift(story);
   $submitForm.trigger("reset");
   putStoriesOnPage();
-  // location.reload();
-  // $submitForm.hide();
-  // const $newStoryLi = generateStoryMarkup(story);
-  // $allStoriesList.prepend($newStoryLi);
   $submitForm.hide();
 }
 
 $submitForm.on("submit", saveAndDisplayStory);
 
 
-function changeStarOnFav(storyMarkup, story){
+function changeStarOnFav(storyMarkup, story) {
+
   if (currentUser) {
+    console.log("inside changestaronfav");
     for (let favStory of currentUser.favorites) {
       if (favStory.storyId === story.storyId) {
         storyMarkup.find("i").removeClass("fa-regular").addClass("fa-solid");
+
       }
     }
+    const $favoriteSpan = $('.star');
+    $favoriteSpan.removeClass('hidden');
 
   }
 }
-// function generateFvrtStarMarkup() {
-//   if (currentUser) {
-//     const $lis = $('LI');
-//     const $span = $(`<span class="star">
-//                         <i class="fa-regular fa-star"></i>
-//                      </span>`);
-//     $lis.prepend($span);
-//   }
-// }
