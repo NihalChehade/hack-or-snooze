@@ -94,6 +94,7 @@ class StoryList {
     });
   }
   static async deleteAStory(currentUser, storyId) {
+    
     const response = await axios({
       url: `${BASE_URL}/stories/${storyId}`,
       method: "DELETE",
@@ -101,7 +102,7 @@ class StoryList {
     });
 
     let {message, story } = response.data;
-
+     console.log(message);
     return new Story({
       storyId: story.storyId,
       title: story.title,

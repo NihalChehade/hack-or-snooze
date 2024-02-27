@@ -58,9 +58,11 @@ function navFavoritesClick() {
   // loop through all of our favorite stories and generate HTML for them
   for (let favorite of favorites) {
     const $favStory = generateStoryMarkup(favorite);
+    $favStory.find("i").removeClass("fa-regular").addClass("fa-solid");
     $favoriteStoriesList.append($favStory);
   }
-
+  const $favoriteSpan = $('.star');
+  $favoriteSpan.removeClass('hidden');
   hidePageComponents();
   $favoriteStoriesList.show();
 
@@ -70,15 +72,29 @@ function navFavoritesClick() {
 $navFavorites.on("click", navFavoritesClick);
 
 function navMyStoriesClick() {
+  console.log("in navmystories");
   $myStoriesList.empty();
   const ownStories = currentUser.ownStories;
 
-  // loop through all of our favorite stories and generate HTML for them
+  // loop through all of our my stories and generate HTML for them
   for (let story of ownStories) {
+
     const $myStory = generateStoryMarkup(story);
+    changeStarOnFav($myStory, story);
+
+    const $trashSpan = $(`<span id="trashSpan" class="trash hidden">
+                            <i class="fas fa-trash-alt"></i>
+                          </span>`);
+                          
+    $myStory.prepend($trashSpan);
     $myStoriesList.append($myStory);
+
   }
 
+  const $trashSpan = $('.trash');
+  $trashSpan.removeClass('hidden');
+  const $favoriteSpan = $('.star');
+  $favoriteSpan.removeClass('hidden');
   hidePageComponents();
   $myStoriesList.show();
 

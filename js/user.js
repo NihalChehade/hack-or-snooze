@@ -108,7 +108,6 @@ function saveUserCredentialsInLocalStorage() {
  */
 
 function updateUIOnUserLogin() {
-
   console.debug("updateUIOnUserLogin");
   putStoriesOnPage();
   $allStoriesList.show();
@@ -119,26 +118,41 @@ function updateUIOnUserLogin() {
 }
 
 async function addRemovefvrtAStory(e) {
-  const starIcon = e.target;
-  const liStory = starIcon.parentElement.parentElement;
-
-  if (starIcon.classList.contains("fa-regular")) {
-
-    starIcon.classList.remove("fa-regular");
-    starIcon.classList.add("fa-solid");
-    
-    currentUser = await User.addANewFavorite(currentUser.username, liStory.id, currentUser.loginToken);
+  const icon = e.target;
+  console.log(icon);
+  const liStory = icon.parentElement.parentElement;
   
-  } else if (starIcon.classList.contains("fa-solid")) {
+  if (icon.classList.contains("fa-regular")) {
 
-    starIcon.classList.remove("fa-solid");
-    starIcon.classList.add("fa-regular");
+    icon.classList.remove("fa-regular");
+    icon.classList.add("fa-solid");
+
+    currentUser = await User.addANewFavorite(currentUser.username, liStory.id, currentUser.loginToken);
+
+  } else if (icon.classList.contains("fa-solid")) {
+
+    icon.classList.remove("fa-solid");
+    icon.classList.add("fa-regular");
     currentUser = await User.removeFavorite(currentUser.username, liStory.id, currentUser.loginToken);
 
   }
-  // const liStory = starIcon.parentElement.parentElement;
+  if(icon.classList.contains("fa-trash-alt")){
+    liStory.remove();
+    storyList.stories = storyList.stories.filter(function(stry){
+      return stry.storyId!==liStory.id;
+    });
+    currentUser.ownStories= currentUser.ownStories.filter(function(stry){
+      return stry.storyId!==liStory.id;
+    });
+    currentUser.favorites = currentUser.favorites.filter(function(stry){
+      return stry.storyId!==liStory.id;
+    })
+     const deletedStory = await StoryList.deleteAStory(currentUser, liStory.id);
+  }
 
-  // currentUser = await User.addANewFavorite(currentUsername, liStory.id, currentUser.loginToken);
 
 }
 $allStoriesList.on("click", addRemovefvrtAStory);
+
+$myStoriesList.on("click", addRemovefvrtAStory);
+$favoriteStoriesList.on("click", addRemovefvrtAStory);

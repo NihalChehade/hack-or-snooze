@@ -7,6 +7,7 @@ let storyList;
 
 async function getAndShowStoriesOnStart() {
   storyList = await StoryList.getStories();
+  console.log("storyList is",storyList);
   $storiesLoadingMsg.remove();
   putStoriesOnPage();
 }
@@ -24,6 +25,7 @@ function generateStoryMarkup(story) {
   const hostName = story.getHostName();
   const $markup = $(`
  <li id="${story.storyId}">
+ 
    <span id="starSpan" class="star hidden">
       <i class="fa-regular fa-star"></i>
    </span>
@@ -35,7 +37,7 @@ function generateStoryMarkup(story) {
    <small class="story-user">posted by ${story.username}</small>
  </li>
 `);
-  
+
   return $markup;
 }
 
@@ -50,22 +52,12 @@ function putStoriesOnPage() {
   // loop through all of our stories and generate HTML for them
   for (let story of storyList.stories) {
     const $story = generateStoryMarkup(story);
-    
-    if(currentUser){
-      for(let favStory of currentUser.favorites){
-        if(favStory.storyId === story.storyId){
-          console.log($story.find("i"));
-          $story.find("i").removeClass("fa-regular").addClass("fa-solid");
-        }
-      }
-      const $favoriteSpan = $('.star');
-      $favoriteSpan.removeClass('hidden');
-    }
 
+    changeStarOnFav($story,story);
     $allStoriesList.append($story);
-
   }
-  
+  const $favoriteSpan = $('.star');                                                    
+  $favoriteSpan.removeClass('hidden');
 
   // generateFavoriteStarOnLogin();
   $allStoriesList.show();
@@ -80,9 +72,10 @@ async function saveAndDisplayStory(evt) {
   const title = $("#submit-title").val();
   const url = $('#submit-url').val();
 
-  
+
   let story = await StoryList.addStory(currentUser, { title, author, url });
   storyList.stories.unshift(story);
+  currentUser.ownStories.unshift(story);
   $submitForm.trigger("reset");
   putStoriesOnPage();
   // location.reload();
@@ -94,6 +87,17 @@ async function saveAndDisplayStory(evt) {
 
 $submitForm.on("submit", saveAndDisplayStory);
 
+
+function changeStarOnFav(storyMarkup, story){
+  if (currentUser) {
+    for (let favStory of currentUser.favorites) {
+      if (favStory.storyId === story.storyId) {
+        storyMarkup.find("i").removeClass("fa-regular").addClass("fa-solid");
+      }
+    }
+
+  }
+}
 // function generateFvrtStarMarkup() {
 //   if (currentUser) {
 //     const $lis = $('LI');
